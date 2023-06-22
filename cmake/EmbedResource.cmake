@@ -16,7 +16,7 @@ function(EmbedResource LIBRARIES_VARIABLE INCLUDE_DIRS_VARIABLE INCLUDE_NAME SYM
     # Create header
     set (INCLUDE_DIRECTORY ${TARGET_DIRECTORY}/include)
     set (INCLUDE_FILE ${INCLUDE_DIRECTORY}/${INCLUDE_NAME})
-    file(WRITE ${INCLUDE_FILE} "#pragma once\n\n")
+    file(WRITE ${INCLUDE_FILE} "#pragma once\n#ifdef __cplusplus\nextern \"C\"\n{\n#endif\n")
     set (${INCLUDE_DIRS_VARIABLE} ${INCLUDE_DIRECTORY} PARENT_SCOPE)
 
 
@@ -51,4 +51,5 @@ function(EmbedResource LIBRARIES_VARIABLE INCLUDE_DIRS_VARIABLE INCLUDE_NAME SYM
         # Write source
         file(APPEND ${SOURCE_FILE}  "const unsigned char ${SYMBOL_NAME}[${FILE_SIZE}] = {${FILE_DATA}};\n")
     endforeach()
+    file(APPEND ${INCLUDE_FILE} "#ifdef __cplusplus\n}\n#endif\n")
 endfunction()
