@@ -1,7 +1,6 @@
 function(EmbedResource LIBRARIES_VARIABLE INCLUDE_DIRS_VARIABLE INCLUDE_NAME SYMBOL_PREFIX DIRECTORY)
-    set (PROJECT_NAME _resources_${DIRECTORY})
-    string(REGEX REPLACE "\\.| |-|/" "_" PROJECT_NAME ${PROJECT_NAME})
-    project(${PROJECT_NAME})
+    set (TARGET_NAME _resources_${DIRECTORY})
+    string(REGEX REPLACE "\\.| |-|/" "_" TARGET_NAME ${TARGET_NAME})
 
     # Create directory
     set (TARGET_DIRECTORY ${CMAKE_BINARY_DIR}/_resources)
@@ -10,8 +9,8 @@ function(EmbedResource LIBRARIES_VARIABLE INCLUDE_DIRS_VARIABLE INCLUDE_NAME SYM
     set (SOURCE_DIRECTORY ${TARGET_DIRECTORY}/src)
     set (SOURCE_FILE ${SOURCE_DIRECTORY}/resource.c)
     file(WRITE ${SOURCE_FILE} "")
-    add_library(${PROJECT_NAME} STATIC ${SOURCE_FILE})
-    set (${LIBRARIES_VARIABLE} ${PROJECT_NAME} PARENT_SCOPE)
+    add_library(${TARGET_NAME} STATIC ${SOURCE_FILE})
+    set (${LIBRARIES_VARIABLE} ${TARGET_NAME} PARENT_SCOPE)
 
     # Create header
     set (INCLUDE_DIRECTORY ${TARGET_DIRECTORY}/include)
